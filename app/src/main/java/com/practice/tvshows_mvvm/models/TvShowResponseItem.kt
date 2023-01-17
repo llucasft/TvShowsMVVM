@@ -1,8 +1,7 @@
 package com.practice.tvshows_mvvm.models
 
-data class WebChannel(
-    val country: Country,
+data class TvShowResponseItem(
     val id: Int,
+    val image: Image,
     val name: String,
-    val officialSite: String
 )
