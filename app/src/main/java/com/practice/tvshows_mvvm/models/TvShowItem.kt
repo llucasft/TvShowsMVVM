@@ -1,6 +1,6 @@
 package com.practice.tvshows_mvvm.models
 
-data class TvShowResponseItem(
+data class TvShowItem(
     val id: Int,
     val image: Image,
     val name: String,
