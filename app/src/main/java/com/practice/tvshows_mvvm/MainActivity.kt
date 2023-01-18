@@ -37,6 +37,24 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
 
+        binding.rvEpisodes.apply {
+            adapter = tvShowAdapter
+            layoutManager = LinearLayoutManager(
+                this@MainActivity, LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            setHasFixedSize(true)
+        }
+
+        binding.rvRecentlyAdded.apply {
+            adapter = tvShowAdapter
+            layoutManager = LinearLayoutManager(
+                this@MainActivity, LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            setHasFixedSize(true)
+        }
+
         viewModel.responseTvShow.observe(this) { listTvShows ->
             tvShowAdapter.tvShows = listTvShows
         }
