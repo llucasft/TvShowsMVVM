@@ -26,9 +26,10 @@ class TvShowViewModel @Inject constructor(
     private fun getAllTvShows() = viewModelScope.launch {
         repository.getTvShows().let { response ->
             if (response.isSuccessful){
-                _response.postValue(response.body())
+                _response.value = response.body()
+                Log.i("TvShowViewModel", "getAllTvShows Success: ${response.body()}")
             } else {
-                Log.d("TvShowViewModel", "getAllTvShows Error: ${response.code()}")
+                Log.i("TvShowViewModel", "getAllTvShows Error: ${response.code()}")
             }
         }
     }
