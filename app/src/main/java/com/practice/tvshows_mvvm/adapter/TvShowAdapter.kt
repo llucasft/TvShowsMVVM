@@ -9,35 +9,39 @@ import coil.load
 import com.practice.tvshows_mvvm.databinding.TvShowLayoutAdapterBinding
 import com.practice.tvshows_mvvm.models.TvShowItem
 
-class TvShowAdapter : RecyclerView.Adapter<TvShowAdapter.MyViewHolder>() {
+class TvShowAdapter(
+    private var tvShows: List<TvShowItem>
+) : RecyclerView.Adapter<TvShowAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(val binding: TvShowLayoutAdapterBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    private lateinit var clickListener: onItemClickListener
 
-
-    private val diffCallback = object : DiffUtil.ItemCallback<TvShowItem>() {
-        override fun areItemsTheSame(oldItem: TvShowItem, newItem: TvShowItem): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: TvShowItem, newItem: TvShowItem): Boolean {
-            return newItem == oldItem
-        }
+    interface onItemClickListener {
+        fun onItemClick(position: Int)
     }
 
-    private val differ = AsyncListDiffer(this, diffCallback)
-    var tvShows: List<TvShowItem>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        clickListener = listener
+    }
+
+    class MyViewHolder(
+        val binding: TvShowLayoutAdapterBinding,
+        listener: onItemClickListener
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
         }
 
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            TvShowLayoutAdapterBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+        val view = TvShowLayoutAdapterBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+        return MyViewHolder(view, clickListener)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

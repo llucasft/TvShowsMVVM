@@ -12,15 +12,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TvShowViewModel @Inject constructor(
-    val repository: TvShowRepository
+class TvShowsViewModel @Inject constructor(
+    private val repository: TvShowRepository
 ) : ViewModel() {
-    private val _response =  MutableLiveData<TvShowItem>()
-    val responseTvShow: LiveData<TvShowItem>
+    private val _response =  MutableLiveData<List<TvShowItem>>()
+    val responseTvShow: LiveData<List<TvShowItem>>
         get() = _response
 
-    fun getTvShow(tvShowId: Int) = viewModelScope.launch {
-        repository.getShowById(tvShowId).let { response ->
+    init {
+        getAllTvShows()
+    }
+
+    private fun getAllTvShows() = viewModelScope.launch {
+        repository.getTvShows().let { response ->
             if (response.isSuccessful){
                 _response.value = response.body()
                 Log.i("TvShowViewModel", "getAllTvShows Success: ${response.body()}")
