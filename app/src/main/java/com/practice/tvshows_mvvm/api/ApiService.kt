@@ -1,6 +1,6 @@
 package com.practice.tvshows_mvvm.api
 
-import com.practice.tvshows_mvvm.models.TvShowItem
+import com.practice.tvshows_mvvm.models.TvShowDetail
 import com.practice.tvshows_mvvm.models.TvShowResponse
 import com.practice.tvshows_mvvm.util.Constants.END_POINT
 import retrofit2.Response
@@ -13,5 +13,5 @@ interface ApiService {
     suspend fun getTvShows(): Response<TvShowResponse>
 
     @GET("shows/{showId}")
-    suspend fun getShowById(@Path("showId") showId: Int): Response<TvShowItem>
+    suspend fun getShowById(@Path("showId") showId: Int): Response<TvShowDetail>
 }

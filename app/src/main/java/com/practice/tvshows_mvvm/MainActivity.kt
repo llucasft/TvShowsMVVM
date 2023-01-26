@@ -50,16 +50,10 @@ class MainActivity : AppCompatActivity() {
         tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 listTvShows[position]
-                Toast.makeText(
-                    this@MainActivity,
-                    "Show ${listTvShows[position].name} clicado!",
-                    Toast.LENGTH_LONG
-                ).show()
                 val intent = Intent(applicationContext, TvShowDetailActivity::class.java)
                 intent.putExtra("id", listTvShows[position].id)
                 startActivity(intent)
             }
         })
-
     }
 }

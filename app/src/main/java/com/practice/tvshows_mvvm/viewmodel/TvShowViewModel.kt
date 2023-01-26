@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.practice.tvshows_mvvm.models.TvShowItem
+import com.practice.tvshows_mvvm.models.TvShowDetail
 import com.practice.tvshows_mvvm.repository.TvShowRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,10 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TvShowViewModel @Inject constructor(
-    val repository: TvShowRepository
+    private val repository: TvShowRepository
 ) : ViewModel() {
-    private val _response =  MutableLiveData<TvShowItem>()
-    val responseTvShow: LiveData<TvShowItem>
+    private val _response =  MutableLiveData<TvShowDetail>()
+    val responseTvShow: LiveData<TvShowDetail>
         get() = _response
 
     fun getTvShow(tvShowId: Int) = viewModelScope.launch {
