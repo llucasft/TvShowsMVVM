@@ -48,8 +48,12 @@ class MainActivity : AppCompatActivity() {
         tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 listTvShows[position]
-                val intent = Intent(applicationContext, TvShowDetailActivity::class.java)
-                intent.putExtra("id", listTvShows[position].id)
+                val intent = Intent(
+                    this@MainActivity,
+                    TvShowDetailActivity::class.java
+                ).apply {
+                    putExtra("id", listTvShows[position].id)
+                }
                 startActivity(intent)
             }
         })
