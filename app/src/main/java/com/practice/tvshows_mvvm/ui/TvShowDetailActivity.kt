@@ -36,7 +36,8 @@ class TvShowDetailActivity : AppCompatActivity() {
     private fun observer() {
         viewModel.responseTvShow.observe(this) { tvShow ->
             tvShow?.let { setViews(tvShow) }.also {
-                binding.fabAddFavorite.setOnClickListener {
+                binding.btnAddFavorite.setOnClickListener {
+                    viewModel.insert(tvShow)
                     Toast.makeText(
                         this@TvShowDetailActivity,
                         "${tvShow.name} is now a favorite!",

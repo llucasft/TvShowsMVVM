@@ -29,4 +29,8 @@ class TvShowViewModel @Inject constructor(
             }
         }
     }
+
+    fun insert(tvShow: TvShowDetail) = viewModelScope.launch {
+        repository.insert(tvShow)
+    }
 }
