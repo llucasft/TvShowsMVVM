@@ -10,6 +10,7 @@ import com.practice.tvshows_mvvm.adapter.TvShowAdapter
 import com.practice.tvshows_mvvm.databinding.ActivityMainBinding
 import com.practice.tvshows_mvvm.models.TvShowItem
 import com.practice.tvshows_mvvm.ui.TvShowDetailActivity
+import com.practice.tvshows_mvvm.ui.TvShowFavoriteActivity
 import com.practice.tvshows_mvvm.viewmodel.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = "Find the best TV shows"
         observers()
+        setupFavoritesButton()
+    }
+
+    private fun setupFavoritesButton() {
+        binding.btnGoToFavorites.setOnClickListener {
+            val intent = Intent(this, TvShowFavoriteActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun observers() {
@@ -47,7 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                listTvShows[position]
                 val intent = Intent(
                     this@MainActivity,
                     TvShowDetailActivity::class.java

@@ -42,4 +42,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
 
+    <Button
+        android:id="@+id/btnGoToFavorites"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/hearticong"
+        app:backgroundTint="@null"
+        android:elevation="16dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
