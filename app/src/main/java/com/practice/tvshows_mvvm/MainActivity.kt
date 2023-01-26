@@ -3,7 +3,6 @@ package com.practice.tvshows_mvvm
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-        tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.onItemClickListener {
+        tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 listTvShows[position]
                 val intent = Intent(applicationContext, TvShowDetailActivity::class.java)

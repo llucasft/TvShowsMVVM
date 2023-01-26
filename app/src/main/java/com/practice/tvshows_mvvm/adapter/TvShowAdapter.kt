@@ -2,8 +2,6 @@ package com.practice.tvshows_mvvm.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.practice.tvshows_mvvm.databinding.TvShowLayoutAdapterBinding
@@ -13,19 +11,19 @@ class TvShowAdapter(
     private var tvShows: List<TvShowItem>
 ) : RecyclerView.Adapter<TvShowAdapter.MyViewHolder>() {
 
-    private lateinit var clickListener: onItemClickListener
+    private lateinit var clickListener: OnItemClickListener
 
-    interface onItemClickListener {
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    fun setOnItemClickListener(listener: onItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         clickListener = listener
     }
 
     class MyViewHolder(
         val binding: TvShowLayoutAdapterBinding,
-        listener: onItemClickListener
+        listener: OnItemClickListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
