@@ -37,11 +37,22 @@
             tools:src="@drawable/ic_100tb" />
 
         <Button
-            android:id="@+id/btnAddFavorite"
+            android:id="@+id/btnRemoveFavorite"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/hearticong"
             app:backgroundTint="@null"
+            android:elevation="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvShowImage"
+            app:layout_constraintEnd_toEndOf="@id/tvShowImage"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/btnAddFavorite"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/hearticong"
+            app:backgroundTint="#80FFFFFF"
             android:elevation="16dp"
             app:layout_constraintBottom_toBottomOf="@id/tvShowImage"
             app:layout_constraintEnd_toEndOf="@id/tvShowImage"

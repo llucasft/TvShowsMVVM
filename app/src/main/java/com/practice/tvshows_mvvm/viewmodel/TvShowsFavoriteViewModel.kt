@@ -24,7 +24,7 @@ class TvShowsFavoriteViewModel @Inject constructor(
     }
 
     private fun fetch() = viewModelScope.launch {
-        repository.getAll().collectLatest { results ->
+        repository.getAll().collect { results ->
             if (results.isEmpty()) {
                 _favorites.value = emptyList()
             } else {

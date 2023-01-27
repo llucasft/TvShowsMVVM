@@ -12,7 +12,9 @@ class TvShowRepository @Inject constructor(
     suspend fun getTvShows() = apiService.getTvShows()
     suspend fun getShowById(tvShowId: Int) = apiService.getShowById(tvShowId)
 
-    suspend fun insert(tvShowDetail: TvShowDetail) = dao.insert(tvShowDetail)
+
+    suspend fun insertFavorite(tvShowDetail: TvShowDetail) = dao.insert(tvShowDetail)
+    suspend fun getShowByIdFromDb(tvShowId: Int) = dao.getShowByIdFromDb(tvShowId)
     fun getAll() = dao.getAll()
     suspend fun delete(tvShowDetail: TvShowDetail) = dao.delete(tvShowDetail)
 }

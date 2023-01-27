@@ -37,9 +37,8 @@ class TvShowFavoriteActivity : AppCompatActivity() {
         viewModel.favorites.observe(this@TvShowFavoriteActivity) { favoritesList ->
             if (favoritesList.isEmpty()) {
                 binding.tvEmptyList.visibility = View.VISIBLE
-            } else {
-                setupRecyclerView(favoritesList)
             }
+            setupRecyclerView(favoritesList)
         }
     }
 

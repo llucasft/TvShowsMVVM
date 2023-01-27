@@ -1,5 +1,6 @@
 package com.practice.tvshows_mvvm.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -35,21 +36,76 @@ class TvShowDetailActivity : AppCompatActivity() {
 
     private fun observer() {
         viewModel.responseTvShow.observe(this) { tvShow ->
-            tvShow?.let { setViews(tvShow) }.also {
-                binding.btnAddFavorite.setOnClickListener {
-                    viewModel.insert(tvShow)
-                    Toast.makeText(
-                        this@TvShowDetailActivity,
-                        "${tvShow.name} is now a favorite!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            tvShow?.let { setViews(tvShow) }
+        }
+    }
+
+    private fun handleAddRemoveShowFromFavorites(tvShow: TvShowDetail) {
+        handleBtnRemoveFavorite(tvShow)
+        handleBtnAddFavorite(tvShow)
+    }
+
+    private fun handleBtnAddFavorite(tvShow: TvShowDetail) {
+        binding.btnAddFavorite.setOnClickListener {
+            try {
+                viewModel.insertFavorite(tvShow)
+                Toast.makeText(
+                    this@TvShowDetailActivity,
+                    "${tvShow.name} is now a favorite!",
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    this@TvShowDetailActivity,
+                    "An error occurred. ",
+                    Toast.LENGTH_LONG
+                ).show()
             }
+        }
+    }
+
+    private fun handleBtnRemoveFavorite(tvShow: TvShowDetail) {
+        binding.btnRemoveFavorite.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Remove ${tvShow.name} from favorites?")
+                .setPositiveButton("Yes") { _, _ ->
+                    try {
+                        viewModel.delete(tvShow)
+                        Toast.makeText(
+                            this@TvShowDetailActivity,
+                            "${tvShow.name} removed from favorites. ",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            this@TvShowDetailActivity,
+                            "An error occurred. ",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
     private fun setViews(tvShow: TvShowDetail) = with(binding) {
         progressBar.visibility = View.GONE
+        viewModel.responseTvShow.observe(this@TvShowDetailActivity) { tvShow ->
+            if (tvShow.favorite) {
+                btnAddFavorite.visibility = View.GONE
+                btnRemoveFavorite.visibility = View.VISIBLE
+            } else {
+                btnRemoveFavorite.visibility = View.GONE
+                btnAddFavorite.visibility = View.VISIBLE
+            }
+        }
+        handleAddRemoveShowFromFavorites(tvShow)
         val apiSummary = tvShow.summary
         val formattedSummary = apiSummary.removeHtmlTags()
         tvShowRatings.text = "${tvShow.rating.average}"

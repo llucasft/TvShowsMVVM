@@ -13,4 +13,5 @@ data class TvShowDetail(
     val name: String,
     val rating: Rating,
     val summary: String,
+    var favorite: Boolean = false
 )

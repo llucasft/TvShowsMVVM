@@ -13,6 +13,9 @@ interface TvShowsDao {
     @Query("SELECT * FROM tvShowDetail ORDER BY id")
     fun getAll(): Flow<List<TvShowDetail>>
 
+    @Query("SELECT * FROM tvShowDetail WHERE id = :id")
+    fun getShowByIdFromDb(id: Int) : Flow<TvShowDetail?>
+
     @Delete
     suspend fun delete(tvShow: TvShowDetail)
 }

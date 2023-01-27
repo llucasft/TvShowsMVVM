@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.practice.tvshows_mvvm.models.TvShowDetail
 import com.practice.tvshows_mvvm.repository.TvShowRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,22 +16,33 @@ import javax.inject.Inject
 class TvShowViewModel @Inject constructor(
     private val repository: TvShowRepository
 ) : ViewModel() {
-    private val _response =  MutableLiveData<TvShowDetail>()
+    private val _response = MutableLiveData<TvShowDetail>()
     val responseTvShow: LiveData<TvShowDetail>
         get() = _response
 
     fun getTvShow(tvShowId: Int) = viewModelScope.launch {
-        repository.getShowById(tvShowId).let { response ->
-            if (response.isSuccessful){
-                _response.value = response.body()
-                Log.i("TvShowViewModel", "getAllTvShows Success: ${response.body()}")
+        repository.getShowByIdFromDb(tvShowId).collect { tvshow ->
+            if (tvshow != null) {
+                _response.value = tvshow
             } else {
-                Log.i("TvShowViewModel", "getAllTvShows Error: ${response.code()}")
+                repository.getShowById(tvShowId).let { response ->
+                    if (response.isSuccessful) {
+                        _response.value = response.body()
+                        Log.i("TvShowViewModel", "getAllTvShows Success: ${response.body()}")
+                    } else {
+                        Log.i("TvShowViewModel", "getAllTvShows Error: ${response.code()}")
+                    }
+                }
             }
         }
     }
 
-    fun insert(tvShow: TvShowDetail) = viewModelScope.launch {
-        repository.insert(tvShow)
+    fun insertFavorite(tvShow: TvShowDetail) = viewModelScope.launch {
+        tvShow.favorite = true
+        repository.insertFavorite(tvShow)
+    }
+
+    fun delete(tvShow: TvShowDetail) = viewModelScope.launch {
+        repository.delete(tvShow)
     }
 }
