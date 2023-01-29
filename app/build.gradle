@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -63,6 +64,10 @@ dependencies {
 
     // Coil
     implementation 'io.coil-kt:coil:2.2.2'
+
+    // Navigation Components
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     // Activity and Fragment KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.3.0"

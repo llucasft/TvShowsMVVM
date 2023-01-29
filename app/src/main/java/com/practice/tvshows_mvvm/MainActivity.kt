@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.practice.tvshows_mvvm.adapter.TvShowAdapter
 import com.practice.tvshows_mvvm.databinding.ActivityMainBinding
@@ -13,10 +14,12 @@ import com.practice.tvshows_mvvm.ui.TvShowDetailActivity
 import com.practice.tvshows_mvvm.ui.TvShowFavoriteActivity
 import com.practice.tvshows_mvvm.viewmodel.TvShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.navigation.ui.setupWithNavController
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var navHostFragment: NavHostFragment
     private lateinit var binding: ActivityMainBinding
     private val viewModel: TvShowsViewModel by viewModels()
     private lateinit var tvShowAdapter: TvShowAdapter
@@ -26,44 +29,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = "Find the best TV shows"
-        observers()
-        setupFavoritesButton()
+        initViews(binding)
     }
 
-    private fun setupFavoritesButton() {
-        binding.btnGoToFavorites.setOnClickListener {
-            val intent = Intent(this, TvShowFavoriteActivity::class.java)
-            startActivity(intent)
+    private fun initViews(binding: ActivityMainBinding) {
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        binding.bottomNavigation.apply {
+            setupWithNavController(navController)
+            setOnNavigationItemReselectedListener {  }
         }
-    }
-
-    private fun observers() {
-        viewModel.responseTvShow.observe(this) { listTvShows ->
-            if (listTvShows.isNotEmpty()) {
-                setUpRv(listTvShows)
-                binding.progressBar.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun setUpRv(listTvShows: List<TvShowItem>) {
-        tvShowAdapter = TvShowAdapter(listTvShows)
-
-        binding.recyclerView.apply {
-            adapter = tvShowAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
-
-        tvShowAdapter.setOnItemClickListener(object : TvShowAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val intent = Intent(
-                    this@MainActivity,
-                    TvShowDetailActivity::class.java
-                ).apply {
-                    putExtra("id", listTvShows[position].id)
-                }
-                startActivity(intent)
-            }
-        })
     }
 }
