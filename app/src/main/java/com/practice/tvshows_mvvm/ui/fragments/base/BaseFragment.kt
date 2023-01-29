@@ -1,4 +1,4 @@
-package com.practice.tvshows_mvvm.ui.fragments
+package com.practice.tvshows_mvvm.ui.fragments.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
