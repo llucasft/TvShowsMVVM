@@ -6,16 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.practice.tvshows_mvvm.databinding.ActivityTvShowDetailBinding
 import com.practice.tvshows_mvvm.databinding.FragmentDetailsBinding
 import com.practice.tvshows_mvvm.models.TvShowDetail
 import com.practice.tvshows_mvvm.ui.fragments.base.BaseFragment
 import com.practice.tvshows_mvvm.util.removeHtmlTags
-import com.practice.tvshows_mvvm.viewmodel.TvShowViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

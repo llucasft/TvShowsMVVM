@@ -1,9 +1,8 @@
-package com.practice.tvshows_mvvm.ui
+package com.practice.tvshows_mvvm.ui.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.practice.tvshows_mvvm.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.practice.tvshows_mvvm.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
